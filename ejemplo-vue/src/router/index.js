@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Dogs from '../views/Dogs.vue'
-import NewDog from '../views/NewDog.vue'
+import Voluntarios from '../views/Voluntarios.vue'
 
 Vue.use(VueRouter)
 
@@ -13,14 +12,9 @@ Vue.use(VueRouter)
     component: Home
   },
   {
-    path: '/dogs',
-    name: 'Dogs',
-    component: Dogs
-  },
-  {
-    path: '/new-dog',
-    name: 'NewDog',
-    component: NewDog
+    path: '/voluntarios',
+    name: 'Voluntarios',
+    component: Voluntarios
   },
   {
     path: '/about',

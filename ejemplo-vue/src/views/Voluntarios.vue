@@ -1,6 +1,6 @@
 <template>
     <div>
-    <h1>Todos los perros</h1>
+    <h1>Todos los voluntarios</h1>
     <ul class="item-list">
       <li v-for="(item, index) in items" :key="index">
        <!-- <img :src="'https://loremflickr.com/160/120/dog?lock='+i"/>-->
@@ -25,7 +25,7 @@ export default {
         //Función asíncrona para consultar los datos
         getData: async function(){
             try {
-                let response = await this.$http.get('/dogs');
+                let response = await this.$http.get('/voluntarios');
                 this.items  = response.data;
             } catch (error) {
                 console.log('error', error);
