@@ -69,5 +69,24 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository {
         where t.id = r.id_tarea and r.id_voluntario = v.id and e.id = t.id_emergencia and et.id = t.id
             and et.descrip = 'EnEjecucion'
     */
+     @Override
+    public List<Voluntario> getVolForTar(String tarea){
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("select distinct v.id, v.nombre, v.fnacimiento from ranking r, voluntario v, tarea tar where r.id_voluntario = v.id and r.id_tarea = tar.id and tar.nombre = '"+tarea+"' order by v.id").executeAndFetch(Voluntario.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public List<Voluntario> getVolForIntervRank(long inferior,long superior){
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("select v.id, v.nombre, v.fnacimiento from ranking r, voluntario v where r.id_voluntario = v.id and r.puntaje between "+inferior+" and "+superior).executeAndFetch(Voluntario.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
 }

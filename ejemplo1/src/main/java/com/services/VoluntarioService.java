@@ -46,4 +46,16 @@ public class VoluntarioService {
            return volRepository.getVolForEme();
     }
 
+    @GetMapping("/voluntarios/tar={tarea}")
+    @ResponseBody
+    public List<Voluntario> getVolForTar(@PathVariable String tarea){
+        return volRepository.getVolForTar(tarea);
+    }
+
+    @GetMapping("/voluntarios/pt>{inferior}&pt<{superior}")
+    @ResponseBody
+    public List<Voluntario> getVolForIntervRank(@PathVariable long inferior, @PathVariable long superior){
+        return volRepository.getVolForIntervRank(inferior,superior);
+    }
+
 }
