@@ -73,7 +73,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
 
     @Override
     public Emergencia putEmer(Emergencia emer){
-        String updateSql = "update emergencia set nombre = :emerName, descrip = :emerDescrip, finicio = :emerFinicio, ffin = :emerFfin where id = :emerId";
+        String updateSql = "update emergencia set nombre = :emerName, descrip = :emerDescrip, finicio = :emerFinicio, ffin = :emerFfin, id_institucion = :idinst where id = :emerId";
         try (Connection con = sql2o.open()) {
             con.createQuery(updateSql)
                     .addParameter("emerName",emer.getNombre())
@@ -81,6 +81,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
                     .addParameter("emerFinicio",emer.getFinicio())
                     .addParameter("emerFfin",emer.getFfin())
                     .addParameter("emerId",emer.getId())
+                    .addParameter("idinst",emer.getIdInstitucion())
                     .executeUpdate();
             return emer;
         } catch (Exception e) {

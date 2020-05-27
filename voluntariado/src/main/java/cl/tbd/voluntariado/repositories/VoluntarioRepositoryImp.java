@@ -75,4 +75,56 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
             return null;
         }
     }
+
+    @Override
+    public List<Voluntario> getVoluntario(long id){
+        try(Connection conn = sql2o.open()){
+            return conn.createQuery("select * from voluntario v where v.id = " + id).executeAndFetch(Voluntario.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Voluntario createVoluntario(Voluntario vol){
+        String querySql = "insert into voluntario(id,nombre,fnacimiento) values (:volid,:volnombre,:volfnacimiento)";
+        try(Connection conn = sql2o.open()){
+            conn.createQuery(querySql)
+                    .addParameter("volid",vol.getId())
+                    .addParameter("volnombre",vol.getNombre())
+                    .addParameter("volfnacimiento",vol.getfNacimiento())
+                    .executeUpdate();
+            return vol;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public void deleteVoluntario(long id){
+        String querySql = "delete from voluntario where id =" + id;
+        try(Connection conn = sql2o.open()){
+            conn.createQuery(querySql).executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public Voluntario updateVoluntario(Voluntario vol){
+        String querySql = "update voluntario set nombre=:volnombre, fnacimiento=:volfnacimiento where id=:volid";
+        try(Connection conn = sql2o.open()){
+            conn.createQuery(querySql)
+                    .addParameter("volnombre",vol.getNombre())
+                    .addParameter("volfnacimiento",vol.getfNacimiento())
+                    .addParameter("volid",vol.getId())
+                    .executeUpdate();
+            return vol;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

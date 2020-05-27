@@ -2,10 +2,8 @@ package cl.tbd.voluntariado.services;
 
 import cl.tbd.voluntariado.models.Voluntario;
 import cl.tbd.voluntariado.repositories.VoluntarioRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -52,4 +50,29 @@ public class VoluntarioService {
     public List<Voluntario> getVolForIntervRank(@PathVariable long inferior, @PathVariable long superior){
         return volRepository.getVolForIntervRank(inferior,superior);
     }
+
+    @GetMapping("/voluntarios/id={id}")
+    @ResponseBody
+    public List<Voluntario> getVoluntario(@PathVariable long id){
+        return volRepository.getVoluntario(id);
+    }
+
+    @PostMapping("/voluntarios")
+    @ResponseBody
+    public Voluntario createVoluntario(@RequestBody Voluntario vol){
+        return volRepository.createVoluntario(vol);
+    }
+
+    @DeleteMapping("/voluntarios/delete/id={id}")
+    @ResponseBody
+    public void deleteVoluntario(@PathVariable long id){
+         volRepository.deleteVoluntario(id);
+    }
+
+    @PutMapping("voluntarios/update")
+    @ResponseBody
+    public Voluntario updateVoluntario(@RequestBody Voluntario vol){
+        return volRepository.updateVoluntario(vol);
+    }
+
 }
