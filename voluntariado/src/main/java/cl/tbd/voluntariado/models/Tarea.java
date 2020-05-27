@@ -77,4 +77,12 @@ public class Tarea {
         this.id_estado = id_estado;
     }
 
+    public Integer getIdEmergencia(){
+        return id_emergencia;
+    }
+
+    public void setIdEmergencia(Integer id_emergencia){
+        this.id_emergencia = id_emergencia;
+    }
+
 }
