@@ -41,4 +41,51 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
             return null;
         }
     }
+
+    @Override
+    public Emergencia createEmer(Emergencia emer){
+        String insert_sql = "insert into emergencia (id,nombre,descrip,finicio,ffin,id_institucion) values (:emerId,:emerName,:emerDescrip,:emerFinicio,:emerFfin,:emerId_institucion)";
+        try(Connection conn = sql2o.open()){
+            conn.createQuery(insert_sql)
+                    .addParameter("emerId",emer.getId())
+                    .addParameter("emerName",emer.getNombre())
+                    .addParameter("emerDescrip",emer.getDescrip())
+                    .addParameter("emerFinicio",emer.getFinicio())
+                    .addParameter("emerFfin",emer.getFfin())
+                    .addParameter("emerId_institucion",emer.getIdInstitucion())
+                    .executeUpdate();
+            return emer;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public void deleteEmer(long id){
+        try(Connection conn = sql2o.open()){
+            conn.createQuery("delete from emergencia e where e.id = "+id)
+            .executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public Emergencia putEmer(Emergencia emer){
+        String updateSql = "update emergencia set nombre = :emerName, descrip = :emerDescrip, finicio = :emerFinicio, ffin = :emerFfin where id = :emerId";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(updateSql)
+                    .addParameter("emerName",emer.getNombre())
+                    .addParameter("emerDescrip", emer.getDescrip())
+                    .addParameter("emerFinicio",emer.getFinicio())
+                    .addParameter("emerFfin",emer.getFfin())
+                    .addParameter("emerId",emer.getId())
+                    .executeUpdate();
+            return emer;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }

@@ -2,10 +2,7 @@ package cl.tbd.voluntariado.services;
 
 import cl.tbd.voluntariado.models.Emergencia;
 import cl.tbd.voluntariado.repositories.EmergenciaRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +26,29 @@ public class EmergenciaService {
         return emerRepository.getEmerForId(id);
     }
 
-    @GetMapping("emergencias/inst={institucion}")
+    @GetMapping("/emergencias/inst={institucion}")
     @ResponseBody
     public List<Emergencia> getEmerForInst(@PathVariable String institucion){
         return emerRepository.getEmerForInst(institucion);
+    }
+
+    @PostMapping("/emergencias")
+    @ResponseBody
+    public Emergencia createEmer(@RequestBody Emergencia emer){
+        Emergencia result = emerRepository.createEmer(emer);
+        return result;
+    }
+
+    @DeleteMapping("/emergencias/delete/id={id}")
+    @ResponseBody
+    public void  deleteEmer(@PathVariable long id){
+        emerRepository.deleteEmer(id);
+    }
+
+    @PutMapping("/emergencias/update")
+    @ResponseBody
+    public Emergencia putEmer(@RequestBody Emergencia emer){
+        Emergencia result = emerRepository.putEmer(emer);
+        return result;
     }
 }
