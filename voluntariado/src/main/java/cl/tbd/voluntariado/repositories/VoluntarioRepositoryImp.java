@@ -103,12 +103,14 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     }
 
     @Override
-    public void deleteVoluntario(long id){
+    public String deleteVoluntario(long id){
         String querySql = "delete from voluntario where id =" + id;
         try(Connection conn = sql2o.open()){
             conn.createQuery(querySql).executeUpdate();
+            return "Se ha eliminado un voluntario";
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return null;
         }
     }
 
@@ -126,5 +128,30 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public  String inscribirVol(String nombreVol, String nombreTar){
+        Integer cont;
+        String querySql = "select count (n.id) as cantidad from " +
+                "(select h.id,h.descrip from habilidad h, tarea t, tarea_habilidad th,eme_habilidad eh " +
+                "where h.id = eh.id_habilidad and eh.id = th.id_emehab and th.id_tarea = t.id and t.nombre = '"+nombreTar+"' and t.cant_vol_requeridos > t.cant_vol_inscritos " +
+                "intersect " +
+                "select distinct h.id, h.descrip " +
+                "from voluntario v, vol_habilidad vh, habilidad h " +
+                "where v.id = vh.id_voluntario and vh.id_habilidad = h.id and v.nombre = '"+nombreVol+"') n";
+        try(Connection conn = sql2o.open()){
+            cont = conn.createQuery(querySql).executeAndFetchFirst(Integer.class);
+            if (cont > 0){
+                return "El voluntario se puede inscribir a la tarea";
+            }
+            else{
+                return "El voluntario no se puede inscribir en la tarea";
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
 }

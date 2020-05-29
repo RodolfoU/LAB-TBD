@@ -65,14 +65,20 @@ public class VoluntarioService {
 
     @DeleteMapping("/voluntarios/delete/id={id}")
     @ResponseBody
-    public void deleteVoluntario(@PathVariable long id){
-         volRepository.deleteVoluntario(id);
+    public String deleteVoluntario(@PathVariable long id){
+         return volRepository.deleteVoluntario(id);
     }
 
-    @PutMapping("voluntarios/update")
+    @PutMapping("/voluntarios/update")
     @ResponseBody
     public Voluntario updateVoluntario(@RequestBody Voluntario vol){
         return volRepository.updateVoluntario(vol);
+    }
+
+    @GetMapping("/voluntarios/inscrib/nom={nombreVol}&tar={nombreTar}")
+    @ResponseBody
+    public String inscribirVol(@PathVariable String nombreVol,@PathVariable String nombreTar){
+        return volRepository.inscribirVol(nombreVol,nombreTar);
     }
 
 }

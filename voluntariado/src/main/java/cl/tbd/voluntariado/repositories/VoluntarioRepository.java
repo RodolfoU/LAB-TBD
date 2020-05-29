@@ -13,6 +13,7 @@ public interface VoluntarioRepository {
     public List<Voluntario> getVolForIntervRank(long inferior,long superior);
     public List<Voluntario> getVoluntario(long id);
     public Voluntario createVoluntario(Voluntario vol);
-    public void deleteVoluntario(long id);
+    public String deleteVoluntario(long id);
     public Voluntario updateVoluntario(Voluntario vol);
+    public String inscribirVol(String nombreVol,String nombreTar);
 }
