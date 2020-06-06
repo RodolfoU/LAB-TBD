@@ -11,6 +11,19 @@ public class Tarea {
     private Integer id_emergencia;
     private Date finicio;
     private Date ffin;
+
+    public Tarea(Integer id, String nombre, String descrip, Integer cant_vol_requeridos, Integer cant_vol_inscritos, Integer id_emergencia, Date finicio, Date ffin, Integer id_estado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descrip = descrip;
+        this.cant_vol_requeridos = cant_vol_requeridos;
+        this.cant_vol_inscritos = cant_vol_inscritos;
+        this.id_emergencia = id_emergencia;
+        this.finicio = finicio;
+        this.ffin = ffin;
+        this.id_estado = id_estado;
+    }
+
     private Integer id_estado;
 
     public Integer getId() {

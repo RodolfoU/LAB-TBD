@@ -2,6 +2,7 @@ package cl.tbd.voluntariado.models;
 
 import java.util.Date;
 
+
 public class Voluntario {
     private Integer id;
     private String nombre;

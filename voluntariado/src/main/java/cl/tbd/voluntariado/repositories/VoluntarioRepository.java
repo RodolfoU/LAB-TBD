@@ -15,5 +15,7 @@ public interface VoluntarioRepository {
     public Voluntario createVoluntario(Voluntario vol);
     public String deleteVoluntario(long id);
     public Voluntario updateVoluntario(Voluntario vol);
-    public String inscribirVol(String nombreVol,String nombreTar);
-}
+    public String inscribirVol(long idVol,long idTar);
+    public int validarVoluntarioEnTarea(long idVol,long idTar);
+    public void updateTarCantidadInscritos(long idTar);
+    }

@@ -1,5 +1,6 @@
 package cl.tbd.voluntariado.repositories;
 
+import cl.tbd.voluntariado.models.Tarea;
 import cl.tbd.voluntariado.models.Voluntario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -131,27 +132,60 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     }
 
     @Override
-    public  String inscribirVol(String nombreVol, String nombreTar){
-        Integer cont;
+    public int validarVoluntarioEnTarea(long idVol,long idTar) {
+        int cont;
         String querySql = "select count (n.id) as cantidad from " +
                 "(select h.id,h.descrip from habilidad h, tarea t, tarea_habilidad th,eme_habilidad eh " +
-                "where h.id = eh.id_habilidad and eh.id = th.id_emehab and th.id_tarea = t.id and t.nombre = '"+nombreTar+"' and t.cant_vol_requeridos > t.cant_vol_inscritos " +
+                "where h.id = eh.id_habilidad and eh.id = th.id_emehab and th.id_tarea = t.id and t.id = '" + idTar + "' and t.cant_vol_requeridos > t.cant_vol_inscritos " +
                 "intersect " +
                 "select distinct h.id, h.descrip " +
                 "from voluntario v, vol_habilidad vh, habilidad h " +
-                "where v.id = vh.id_voluntario and vh.id_habilidad = h.id and v.nombre = '"+nombreVol+"') n";
+                "where v.id = vh.id_voluntario and vh.id_habilidad = h.id and v.id = '" + idVol + "') n";
         try(Connection conn = sql2o.open()){
             cont = conn.createQuery(querySql).executeAndFetchFirst(Integer.class);
-            if (cont > 0){
-                return "El voluntario se puede inscribir a la tarea";
-            }
-            else{
-                return "El voluntario no se puede inscribir en la tarea";
-            }
+            return cont;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return null;
+            return 0;
         }
+    }
 
+    @Override
+    public void updateTarCantidadInscritos(long idTar){
+        String querySql = "update tarea set cant_vol_inscritos = cant_vol_inscritos  + 1 where id =" + idTar;
+        try(Connection conn = sql2o.open()){
+            conn.createQuery(querySql).executeUpdate();
+            return;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+    }
+
+    @Override
+    public String inscribirVol(long idVol,long idTar) {
+        Integer cont;
+        cont = validarVoluntarioEnTarea(idVol, idTar);
+        if (cont > 0) {
+            String querySql = "insert into ranking (id,id_voluntario,id_tarea,puntaje,flg_invitado,flg_participa) values(:id,:idVol,:idTar,:puntj,:flgInvitado,:flgParticipa)";
+            try (Connection conn = sql2o.open()) {
+                conn.createQuery(querySql)
+                        .addParameter("id", 10000)
+                        .addParameter("idVol", idVol)
+                        .addParameter("idTar", idTar)
+                        .addParameter("puntj", 50)
+                        .addParameter("flgInvitado", 1)
+                        .addParameter("flgParticipa", 1)
+                        .executeUpdate();
+                updateTarCantidadInscritos(idTar);
+                return "El voluntario se ha inscrito en la tarea";
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return "No se pudo agregar al voluntario";
+            }
+        } else {
+            return "El voluntario no se puede inscribir en la tarea";
+        }
     }
 }
+

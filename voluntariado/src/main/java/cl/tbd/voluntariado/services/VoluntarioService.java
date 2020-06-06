@@ -75,10 +75,10 @@ public class VoluntarioService {
         return volRepository.updateVoluntario(vol);
     }
 
-    @GetMapping("/voluntarios/inscrib/nom={nombreVol}&tar={nombreTar}")
+    @GetMapping("/voluntarios/inscrib/nom={idVol}&tar={idTar}")
     @ResponseBody
-    public String inscribirVol(@PathVariable String nombreVol,@PathVariable String nombreTar){
-        return volRepository.inscribirVol(nombreVol,nombreTar);
+    public String inscribirVol(@PathVariable long idVol,@PathVariable long idTar){
+        return volRepository.inscribirVol(idVol,idTar);
     }
 
 }

@@ -11,4 +11,5 @@ public interface TareaRepository {
     public Tarea createTar(Tarea tar);
     public void deleteTar(long id);
     public Tarea updateTar(Tarea tar);
-}
+    public int getNumeroTareas() ;
+    }

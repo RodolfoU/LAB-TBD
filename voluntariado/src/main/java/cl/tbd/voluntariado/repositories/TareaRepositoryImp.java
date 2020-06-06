@@ -98,4 +98,15 @@ public class TareaRepositoryImp implements TareaRepository{
             return null;
         }
     }
+    @Override
+    public int getNumeroTareas() {
+        int cont;
+        try(Connection conn = sql2o.open()){
+           cont =conn.createQuery("select count(*) from tarea").executeScalar(Integer.class);
+           return cont;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+    }
 }
