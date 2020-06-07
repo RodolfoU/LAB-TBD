@@ -10,10 +10,33 @@ import java.util.List;
 public class TareaService {
     private final TareaRepository tarRepository;
 
+    //MÉTODO CONSTRUCTOR ---------------------------------------------------------------------------
     public TareaService(TareaRepository tarRepository) {
         this.tarRepository = tarRepository;
     }
 
+    //CREATE ---------------------------------------------------------------------------------------
+    @PostMapping("/tareas")
+    @ResponseBody
+    public Tarea createTar(@RequestBody Tarea tar){
+        return tarRepository.createTar(tar);
+    }
+
+    //DELETE ---------------------------------------------------------------------------------------
+    @DeleteMapping("/tareas/delete/id={id}")
+    @ResponseBody
+    public String deleteTar(@PathVariable long id){
+        return tarRepository.deleteTar(id);
+    }
+
+    //PUTS -----------------------------------------------------------------------------------------
+    @PutMapping("tareas/update")
+    @ResponseBody
+    public Tarea updateTar(@RequestBody Tarea tar){
+        return tarRepository.updateTar(tar);
+    }
+
+    //GETS -----------------------------------------------------------------------------------------
     @GetMapping("/tareas")
     @ResponseBody
     public List<Tarea> getAllTar(){
@@ -32,21 +55,4 @@ public class TareaService {
         return tarRepository.getTar(id);
     }
 
-    @PostMapping("/tareas")
-    @ResponseBody
-    public Tarea createTar(@RequestBody Tarea tar){
-        return tarRepository.createTar(tar);
-    }
-
-    @DeleteMapping("/tareas/delete/id={id}")
-    @ResponseBody
-    public void deleteTar(@PathVariable long id){
-        tarRepository.deleteTar(id);
-    }
-
-    @PutMapping("tareas/update")
-    @ResponseBody
-    public Tarea updateTar(@RequestBody Tarea tar){
-        return tarRepository.updateTar(tar);
-    }
 }

@@ -14,6 +14,64 @@ public class RankingRepositoryImp implements RankingRepository {
     @Autowired
     private Sql2o sql2o;
 
+    //---------------------------------------------------------------------------------------------------------------------------
+    //------------------------------- REST SERVICES -----------------------------------------------------------------------------
+
+    //CREATE --------------------------------------------------------------------------------------------------------------------
+    @Override
+    public Ranking createRank(Ranking rank){
+        String insert_sql = "insert into ranking (id,id_voluntario,id_tarea,puntaje,flg_invitado,flg_participa) " +
+                "values (:rankId,:rankId_voluntario,:rankId_tarea,:rankPuntaje,:rankFlg_invitado,:rankFlg_participa)";
+        try(Connection conn = sql2o.open()){
+            conn.createQuery(insert_sql)
+                    .addParameter("rankId",rank.getId())
+                    .addParameter("rankId_voluntario",rank.getIdVoluntario())
+                    .addParameter("rankId_tarea",rank.getIdTarea())
+                    .addParameter("rankPuntaje",rank.getPuntaje())
+                    .addParameter("rankFlg_invitado",rank.getFlgInvitado())
+                    .addParameter("rankFlg_participa",rank.getFlgParticipa())
+                    .executeUpdate();
+            return rank;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    //DELETE --------------------------------------------------------------------------------------------------------------------
+    @Override
+    public String deleteRank(long id){
+        try(Connection conn = sql2o.open()){
+            conn.createQuery("delete from ranking r where r.id = "+id)
+                    .executeUpdate();
+            return "Se ha eliminado el ranking "+id;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    //PUTS (set) ----------------------------------------------------------------------------------------------------------------
+    @Override
+    public Ranking putRank(Ranking rank){
+        String updateSql = "update ranking set id_voluntario = :rankId_voluntario, id_tarea = :rankId_tarea, puntaje = :rankPuntaje, flg_invitado = :rankFlg_invitado, flg_participa = :rankFlg_participa where id = :rankId";
+        try (Connection con = sql2o.open()) {
+            con.createQuery(updateSql)
+                    .addParameter("rankId_voluntario",rank.getIdVoluntario())
+                    .addParameter("rankId_tarea", rank.getIdTarea())
+                    .addParameter("rankPuntaje",rank.getPuntaje())
+                    .addParameter("rankFlg_invitado",rank.getFlgInvitado())
+                    .addParameter("rankFlg_participa",rank.getFlgParticipa())
+                    .addParameter("rankId",rank.getId())
+                    .executeUpdate();
+            return rank;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    //GETS (select) -------------------------------------------------------------------------------------------------------------
     @Override
     public List<Ranking> getAllRank(){
         try(Connection conn = sql2o.open()){
@@ -33,50 +91,5 @@ public class RankingRepositoryImp implements RankingRepository {
             return null;
         }
     }
-    @Override
-    public Ranking createRank(Ranking rank){
-        String insert_sql = "insert into ranking (id,id_voluntario,id_tarea,puntaje,flg_invitado,flg_participa) values (:rankId,:rankId_voluntario,:rankId_tarea,:rankPuntaje,:rankFlg_invitado,:rankFlg_participa)";
-        try(Connection conn = sql2o.open()){
-            conn.createQuery(insert_sql)
-                    .addParameter("rankId",rank.getId())
-                    .addParameter("rankId_voluntario",rank.getIdVoluntario())
-                    .addParameter("rankId_tarea",rank.getIdTarea())
-                    .addParameter("rankPuntaje",rank.getPuntaje())
-                    .addParameter("rankFlg_invitado",rank.getFlgInvitado())
-                    .addParameter("rankFlg_participa",rank.getFlgParticipa())
-                    .executeUpdate();
-            return rank;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
 
-    @Override
-    public void deleteRank(long id){
-        try(Connection conn = sql2o.open()){
-            conn.createQuery("delete from ranking r where r.id = "+id)
-                    .executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    @Override
-    public Ranking putRank(Ranking rank){
-        String updateSql = "update ranking set id_voluntario = :rankId_voluntario, id_tarea = :rankId_tarea, puntaje = :rankPuntaje, flg_invitado = :rankFlg_invitado, flg_participa = :rankFlg_participa where id = :rankId";
-        try (Connection con = sql2o.open()) {
-            con.createQuery(updateSql)
-                    .addParameter("rankId_voluntario",rank.getIdVoluntario())
-                    .addParameter("rankId_tarea", rank.getIdTarea())
-                    .addParameter("rankPuntaje",rank.getPuntaje())
-                    .addParameter("rankFlg_invitado",rank.getFlgInvitado())
-                    .addParameter("rankFlg_participa",rank.getFlgParticipa())
-                    .addParameter("rankId",rank.getId())
-                    .executeUpdate();
-            return rank;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
 }

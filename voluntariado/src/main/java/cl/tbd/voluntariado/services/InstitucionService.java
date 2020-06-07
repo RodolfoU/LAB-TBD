@@ -11,11 +11,15 @@ import java.util.List;
 
 @RestController
 public class InstitucionService {
+
     private final InstitucionRepository instRepository;
+
+    //MÉTODO CONSTRUCTOR -----------------------------------------------------------------------------------
     InstitucionService(InstitucionRepository instRepository){
         this.instRepository = instRepository;
     }
 
+    //GETS -------------------------------------------------------------------------------------------------
     @GetMapping("/instituciones")
     @ResponseBody
     public List<Institucion> getAllInst() {

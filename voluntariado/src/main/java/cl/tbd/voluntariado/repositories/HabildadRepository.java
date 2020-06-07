@@ -7,8 +7,11 @@ import java.util.List;
 
 public interface HabildadRepository {
     public Habilidad createHab(Habilidad hab);
+    public String deleteHab(long id);
+
+    public Habilidad putHab(Habilidad hab);
+
     public List<Habilidad> getAllHab();
     public List<Habilidad> getHabForId(long id);
-    public Habilidad putHab(Habilidad hab);
-    public void deleteHab(long id);
+
 }

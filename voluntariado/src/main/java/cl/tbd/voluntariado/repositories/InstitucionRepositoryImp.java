@@ -13,6 +13,10 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
     @Autowired
     private Sql2o sql2o;
 
+    //---------------------------------------------------------------------------------------------------------------------------
+    //------------------------------- REST SERVICES -----------------------------------------------------------------------------
+
+    //GETS (select) -------------------------------------------------------------------------------------------------------------
     @Override
     public List<Institucion> getAllInst() {
         try(Connection conn = sql2o.open()){

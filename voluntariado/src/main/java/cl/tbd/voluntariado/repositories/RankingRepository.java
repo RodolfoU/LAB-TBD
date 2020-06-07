@@ -6,9 +6,11 @@ import cl.tbd.voluntariado.models.Ranking;
 import java.util.List;
 
 public interface RankingRepository {
+    public Ranking createRank(Ranking rank);
+    public String deleteRank(long id);
+
+    public Ranking putRank(Ranking rank);
+
     public List<Ranking> getAllRank();
     public List<Ranking> getRankForId(long id);
-    public Ranking createRank(Ranking rank);
-    public void deleteRank(long id);
-    public Ranking putRank(Ranking rank);
 }
