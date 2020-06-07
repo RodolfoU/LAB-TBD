@@ -10,10 +10,35 @@ import java.util.List;
 public class EmergenciaService {
     private final EmergenciaRepository emerRepository;
 
+    //Método Constructor ---------------------------------------------------------------------------------
     public EmergenciaService(EmergenciaRepository emerRepository) {
         this.emerRepository = emerRepository;
     }
 
+    //CREATE ---------------------------------------------------------------------------------------------
+    @PostMapping("/emergencias")
+    @ResponseBody
+    public Emergencia createEmer(@RequestBody Emergencia emer){
+        Emergencia result = emerRepository.createEmer(emer);
+        return result;
+    }
+
+    //DELETE ---------------------------------------------------------------------------------------------
+    @DeleteMapping("/emergencias/delete/id={id}")
+    @ResponseBody
+    public String deleteEmer(@PathVariable long id){
+        return emerRepository.deleteEmer(id);
+    }
+
+    //PUTS -----------------------------------------------------------------------------------------------
+    @PutMapping("/emergencias/update")
+    @ResponseBody
+    public Emergencia putEmer(@RequestBody Emergencia emer){
+        Emergencia result = emerRepository.putEmer(emer);
+        return result;
+    }
+
+    //GETS -----------------------------------------------------------------------------------------------
     @GetMapping("/emergencias")
     @ResponseBody
     public List<Emergencia> getAllEmer(){
@@ -32,23 +57,4 @@ public class EmergenciaService {
         return emerRepository.getEmerForInst(institucion);
     }
 
-    @PostMapping("/emergencias")
-    @ResponseBody
-    public Emergencia createEmer(@RequestBody Emergencia emer){
-        Emergencia result = emerRepository.createEmer(emer);
-        return result;
-    }
-
-    @DeleteMapping("/emergencias/delete/id={id}")
-    @ResponseBody
-    public void  deleteEmer(@PathVariable long id){
-        emerRepository.deleteEmer(id);
-    }
-
-    @PutMapping("/emergencias/update")
-    @ResponseBody
-    public Emergencia putEmer(@RequestBody Emergencia emer){
-        Emergencia result = emerRepository.putEmer(emer);
-        return result;
-    }
 }
