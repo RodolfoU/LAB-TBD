@@ -37,12 +37,6 @@ public class VoluntarioService {
         return volRepository.updateVoluntario(vol);
     }
 
-    @GetMapping("/voluntarios/inscrib/nom={idVol}&tar={idTar}")
-    @ResponseBody
-    public String inscribirVol(@PathVariable long idVol,@PathVariable long idTar){
-        return volRepository.inscribirVol(idVol,idTar);
-    }
-
     //GETS ----------------------------------------------------------------------------------
     @GetMapping("/voluntarios")
     @ResponseBody

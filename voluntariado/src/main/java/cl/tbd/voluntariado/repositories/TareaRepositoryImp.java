@@ -101,7 +101,7 @@ public class TareaRepositoryImp implements TareaRepository{
     @Override
     public List<Tarea> getTarForEmer(String emergencia) {
         try(Connection conn = sql2o.open()){
-            return conn.createQuery("select tar.id,tar.nombre, tar.descrip,tar.cant_vol_requeridos,tar.cant_vol_inscritos,tar.finicio,tar.ffin,tar.id_estado from tarea tar, emergencia emer where tar.id_emergencia = emer.id and emer.nombre = '"+emergencia+"'").executeAndFetch(Tarea.class);
+            return conn.createQuery("select tar.id,tar.nombre,tar.descrip,tar.cant_vol_requeridos,tar.cant_vol_inscritos,tar.id_emergencia,tar.finicio,tar.ffin,tar.id_estado from tarea tar, emergencia emer where tar.id_emergencia = emer.id and emer.nombre = '"+emergencia+"'").executeAndFetch(Tarea.class);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;

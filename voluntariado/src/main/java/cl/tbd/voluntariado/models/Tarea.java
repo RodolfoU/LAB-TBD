@@ -11,6 +11,7 @@ public class Tarea {
     private Integer id_emergencia;
     private Date finicio;
     private Date ffin;
+    private Integer id_estado;
 
     public Tarea(Integer id, String nombre, String descrip, Integer cant_vol_requeridos, Integer cant_vol_inscritos, Integer id_emergencia, Date finicio, Date ffin, Integer id_estado) {
         this.id = id;
@@ -23,8 +24,6 @@ public class Tarea {
         this.ffin = ffin;
         this.id_estado = id_estado;
     }
-
-    private Integer id_estado;
 
     public Integer getId() {
         return id;

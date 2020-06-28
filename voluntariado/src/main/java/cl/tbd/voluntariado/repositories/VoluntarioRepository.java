@@ -9,9 +9,6 @@ public interface VoluntarioRepository {
     public String deleteVoluntario(long id);
 
     public Voluntario updateVoluntario(Voluntario vol);
-    public String inscribirVol(long idVol,long idTar);
-    public int validarVoluntarioEnTarea(long idVol,long idTar);
-    public void updateTarCantidadInscritos(long idTar);
 
     public List<Voluntario> getAllVol();
     public List<Voluntario> getVoluntario(long id);

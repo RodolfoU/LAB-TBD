@@ -1,0 +1,7 @@
+BEGIN          
+call pa_recalcular_ranking();
+return null;
+END; 
+
+*NOTA
+Crear desde opción "Trigger Functions"
