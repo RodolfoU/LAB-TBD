@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Voluntarios from '../views/Voluntarios.vue'
+import NuevoVoluntario from '../views/NuevoVoluntario.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ Vue.use(VueRouter)
     path: '/voluntarios',
     name: 'Voluntarios',
     component: Voluntarios
+  },
+  {
+    path: '/nuevoVoluntario',
+    name: 'NuevoVoluntario',
+    component: NuevoVoluntario
   },
   {
     path: '/about',

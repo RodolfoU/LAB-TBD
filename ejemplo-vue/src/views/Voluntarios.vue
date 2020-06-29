@@ -3,8 +3,7 @@
     <h1>Todos los voluntarios</h1>
     <ul class="item-list">
       <li v-for="(item, index) in items" :key="index">
-       <!-- <img :src="'https://loremflickr.com/160/120/dog?lock='+i"/>-->
-        {{item.name}}
+        {{item.nombre}}
       </li>
     </ul>
     <div v-if="items.length==0" class="empty-list">
@@ -27,8 +26,9 @@ export default {
             try {
                 let response = await this.$http.get('/voluntarios');
                 this.items  = response.data;
+                console.log(response);
             } catch (error) {
-                console.log('error', error);
+                console.log('try catch');
             }
         }
     },

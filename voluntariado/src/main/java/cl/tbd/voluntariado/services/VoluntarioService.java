@@ -17,6 +17,7 @@ public class VoluntarioService {
     }
 
     //CREATE --------------------------------------------------------------------------------
+    @CrossOrigin(origins="*")
     @PostMapping("/voluntarios")
     @ResponseBody
     public Voluntario createVoluntario(@RequestBody Voluntario vol){
@@ -38,18 +39,21 @@ public class VoluntarioService {
     }
 
     //GETS ----------------------------------------------------------------------------------
+    @CrossOrigin(origins="*")
     @GetMapping("/voluntarios")
     @ResponseBody
     public List<Voluntario> getAllVol() {
         return volRepository.getAllVol();
     }
 
+    @CrossOrigin(origins="*")
     @GetMapping("/voluntarios/id={id}")
     @ResponseBody
     public List<Voluntario> getVoluntario(@PathVariable long id){
         return volRepository.getVoluntario(id);
     }
 
+    @CrossOrigin(origins="*")
     @GetMapping("/voluntarios/count")
     @ResponseBody
     public String countVoluntarios(){
@@ -57,24 +61,28 @@ public class VoluntarioService {
         return String.format("Tienes %s voluntarios!!", total);
     }
 
+    @CrossOrigin(origins="*")
     @GetMapping("/voluntarios/hab={habilidad}")
     @ResponseBody
     public List<Voluntario> getVolForHab(@PathVariable String habilidad) {
         return volRepository.getVolForHab(habilidad);
     }
 
+    @CrossOrigin(origins="*")
     @GetMapping("/voluntarios/emergencias")
     @ResponseBody
     public List<Voluntario> getVolForEme() {
         return volRepository.getVolForEme();
     }
 
+    @CrossOrigin(origins="*")
     @GetMapping("/voluntarios/tar={tarea}")
     @ResponseBody
     public List<Voluntario> getVolForTar(@PathVariable String tarea){
         return volRepository.getVolForTar(tarea);
     }
 
+    @CrossOrigin(origins="*")
     @GetMapping("/voluntarios/pt>{inferior}&pt<{superior}")
     @ResponseBody
     public List<Voluntario> getVolForIntervRank(@PathVariable long inferior, @PathVariable long superior){
