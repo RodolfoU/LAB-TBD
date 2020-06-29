@@ -20,12 +20,15 @@ public class HablidadRepositoryImp implements HabildadRepository{
     // POST (create) --------------------------------------------------------------------------------------
     @Override
     public Habilidad createHab(Habilidad hab) {
+        int contHab;
         String insert_sql = "insert into habilidad (id,descrip) values (:habId,:habDescrip)";
+        contHab = contTuplas("select MAX(id) from habilidad");
         try(Connection conn = sql2o.open()){
             conn.createQuery(insert_sql)
-                    .addParameter("habId",hab.getId())
+                    .addParameter("habId",contHab+1)
                     .addParameter("habDescrip",hab.getDescrip())
                     .executeUpdate();
+            hab.setId(contHab+1);
             return hab;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -83,4 +86,16 @@ public class HablidadRepositoryImp implements HabildadRepository{
         }
     }
 
+    //OTROS ----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public int contTuplas (String querySQL){
+        int total = 0;
+        try(Connection conn = sql2o.open()){
+            total = conn.createQuery(querySQL).executeScalar(Integer.class);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return total;
+    }
 }

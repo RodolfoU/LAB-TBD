@@ -8,4 +8,6 @@ public interface InstitucionRepository {
 
     public List<Institucion> getAllInst();
     public List<Institucion> getInstForId(long id);
+
+    public int contTuplas (String querySQL);
 }

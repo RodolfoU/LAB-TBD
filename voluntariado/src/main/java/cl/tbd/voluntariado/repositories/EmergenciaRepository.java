@@ -14,4 +14,6 @@ public interface EmergenciaRepository {
     public List<Emergencia> getEmerForId(long id);
     public List<Emergencia> getEmerForInst(String institucion);
 
+    public int contTuplas (String querySQL);
+
 }

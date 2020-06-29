@@ -36,4 +36,17 @@ public class InstitucionRepositoryImp implements InstitucionRepository{
             return null;
         }
     }
+
+    //OTROS ----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public int contTuplas (String querySQL){
+        int total = 0;
+        try(Connection conn = sql2o.open()){
+            total = conn.createQuery(querySQL).executeScalar(Integer.class);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return total;
+    }
 }

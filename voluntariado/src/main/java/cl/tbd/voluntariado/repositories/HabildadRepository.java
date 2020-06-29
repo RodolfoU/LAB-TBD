@@ -14,4 +14,6 @@ public interface HabildadRepository {
     public List<Habilidad> getAllHab();
     public List<Habilidad> getHabForId(long id);
 
+    public int contTuplas (String querySQL);
+
 }

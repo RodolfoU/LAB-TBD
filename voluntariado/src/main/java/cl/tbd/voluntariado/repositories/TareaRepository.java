@@ -14,4 +14,6 @@ public interface TareaRepository {
     public List<Tarea> getTar(long id);
     public List<Tarea> getTarForEmer(String emergencia);
     public int getNumeroTareas() ;
+
+    public int contTuplas (String querySQL);
     }

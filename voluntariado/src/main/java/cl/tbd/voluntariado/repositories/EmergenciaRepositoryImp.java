@@ -18,17 +18,20 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
     // POST (create) --------------------------------------------
     @Override
     public Emergencia createEmer(Emergencia emer){
+        int contEmer;
         String insert_sql = "insert into emergencia (id,nombre,descrip,finicio,ffin,id_institucion) values " +
                 "(:emerId,:emerName,:emerDescrip,:emerFinicio,:emerFfin,:emerId_institucion)";
+        contEmer = contTuplas("select MAX(id) from emergencia");
         try(Connection conn = sql2o.open()){
             conn.createQuery(insert_sql)
-                    .addParameter("emerId",emer.getId())
+                    .addParameter("emerId",contEmer+1)
                     .addParameter("emerName",emer.getNombre())
                     .addParameter("emerDescrip",emer.getDescrip())
                     .addParameter("emerFinicio",emer.getFinicio())
                     .addParameter("emerFfin",emer.getFfin())
                     .addParameter("emerId_institucion",emer.getIdInstitucion())
                     .executeUpdate();
+            emer.setId(contEmer+1);
             return emer;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -99,6 +102,19 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
             System.out.println(e.getMessage());
             return null;
         }
+    }
+
+    //OTROS ----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public int contTuplas (String querySQL){
+        int total = 0;
+        try(Connection conn = sql2o.open()){
+            total = conn.createQuery(querySQL).executeScalar(Integer.class);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return total;
     }
 
 }

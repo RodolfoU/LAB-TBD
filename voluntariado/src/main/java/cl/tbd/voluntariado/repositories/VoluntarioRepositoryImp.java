@@ -19,13 +19,16 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     // POST (create) ------------------------------------------------------------------
     @Override
     public Voluntario createVoluntario(Voluntario vol){
+        int contVol;
         String querySql = "insert into voluntario(id,nombre,fnacimiento) values (:volid,:volnombre,:volfnacimiento)";
+        contVol = contTuplas("select MAX(id) from voluntario");
         try(Connection conn = sql2o.open()){
             conn.createQuery(querySql)
-                    .addParameter("volid",vol.getId())
+                    .addParameter("volid",contVol+1)
                     .addParameter("volnombre",vol.getNombre())
                     .addParameter("volfnacimiento",vol.getfNacimiento())
                     .executeUpdate();
+            vol.setId(contVol+1);
             return vol;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -137,5 +140,17 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
+    //OTROS ----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public int contTuplas (String querySQL){
+        int total = 0;
+        try(Connection conn = sql2o.open()){
+            total = conn.createQuery(querySQL).executeScalar(Integer.class);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return total;
+    }
 }
 

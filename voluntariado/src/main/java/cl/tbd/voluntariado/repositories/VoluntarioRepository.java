@@ -18,4 +18,6 @@ public interface VoluntarioRepository {
     public List<Voluntario> getVolForTar(String tarea);
     public List<Voluntario> getVolForIntervRank(long inferior,long superior);
 
+    public int contTuplas (String querySQL);
+
 }

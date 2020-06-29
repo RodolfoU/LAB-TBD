@@ -19,11 +19,13 @@ public class TareaRepositoryImp implements TareaRepository{
     //CREATE --------------------------------------------------------------------------------------------------------------------
     @Override
     public Tarea createTar(Tarea tar){
+        int contTar;
         String querySql = "insert into tarea(id,nombre,descrip,cant_vol_requeridos,cant_vol_inscritos,id_emergencia,finicio,ffin,id_estado) " +
                 "values (:tarId,:tarNombre,:tarDescrip,:tarCantRequer,:tarCantInscrit,:tarId_Emer,:tarFinicio,:tarFfin,:tarId_estado)";
+        contTar = contTuplas("select MAX(id) from tarea");
         try(Connection conn = sql2o.open()){
             conn.createQuery(querySql)
-                    .addParameter("tarId",tar.getId())
+                    .addParameter("tarId",contTar+1)
                     .addParameter("tarNombre",tar.getNombre())
                     .addParameter("tarDescrip",tar.getDescrip())
                     .addParameter("tarCantRequer",tar.getCantVolRequeridos())
@@ -33,6 +35,7 @@ public class TareaRepositoryImp implements TareaRepository{
                     .addParameter("tarFfin",tar.getFfin())
                     .addParameter("tarId_estado",tar.getIdEstado())
                     .executeUpdate();
+            tar.setId(contTar+1);
             return tar;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -118,5 +121,18 @@ public class TareaRepositoryImp implements TareaRepository{
             System.out.println(e.getMessage());
             return -1;
         }
+    }
+
+    //OTROS ----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public int contTuplas (String querySQL){
+        int total = 0;
+        try(Connection conn = sql2o.open()){
+            total = conn.createQuery(querySQL).executeScalar(Integer.class);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+        return total;
     }
 }
