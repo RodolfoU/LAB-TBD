@@ -11,11 +11,13 @@ public class EmergenciaService {
     private final EmergenciaRepository emerRepository;
 
     //Método Constructor ---------------------------------------------------------------------------------
+
     public EmergenciaService(EmergenciaRepository emerRepository) {
         this.emerRepository = emerRepository;
     }
 
     //CREATE ---------------------------------------------------------------------------------------------
+
     @PostMapping("/emergencias")
     @ResponseBody
     public Emergencia createEmer(@RequestBody Emergencia emer){

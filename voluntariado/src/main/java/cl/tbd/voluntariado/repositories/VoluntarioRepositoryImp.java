@@ -17,6 +17,12 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     //------------------------------- REST SERVICES -----------------------------------------------------------------------------
 
     // POST (create) ------------------------------------------------------------------
+
+    /*
+   Entrada: Recibe un objeto tipo Voluntario
+   Proceso: Se encarga de hacer un create (crea un voluntario en la base de datos)
+   Salida: Retorna el bojeto creado
+    */
     @Override
     public Voluntario createVoluntario(Voluntario vol){
         int contVol;
@@ -37,6 +43,12 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     }
 
     //DELETE -------------------------------------------------------------------------
+
+    /*
+   Entrada: Recibe un dato tipo long que representa una id
+   Proceso: Se encarga de hacer un delete (borra un voluntario en la base de datos)
+   Salida: Retorna un string con el mensaje de respuesta de la id eliminada
+    */
     @Override
     public String deleteVoluntario(long id){
         String querySql = "delete from voluntario where id =" + id;
@@ -50,6 +62,12 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     }
 
     //PUTS (set) --------------------------------------------------------------------
+
+    /*
+   Entrada: Recibe un objeto tipo Voluntario
+   Proceso: Se encarga de hacer un update (modifica un voluntario en la base de datos)
+   Salida: Retorna el objeto modificado
+    */
     @Override
     public Voluntario updateVoluntario(Voluntario vol){
         String querySql = "update voluntario set nombre=:volnombre, fnacimiento=:volfnacimiento where id=:volid";
@@ -67,6 +85,12 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     }
 
     // GETS (select) -------------------------------------------------------------------------------------
+
+    /*
+   Entrada: No recibe nada
+   Proceso: Se guardan los voluntarios de la base de datos en una lista
+   Salida: Retorna una lista de objetos tipo voluntario
+    */
     @Override
     public List<Voluntario> getAllVol() {
         try(Connection conn = sql2o.open()){
@@ -77,6 +101,11 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
+    /*
+   Entrada: Recibe un dato tipo long que representa una id
+   Proceso: Se encarga de guardar una lista con objetos tipo voluntarios
+   Salida: Retorna la lista con objetos tipo voluntarios
+    */
     @Override
     public List<Voluntario> getVoluntario(long id){
         try(Connection conn = sql2o.open()){
@@ -87,6 +116,11 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
+    /*
+   Entrada: No recibe nada
+   Proceso: Se encarga de contar la cantidad de voluntarios en la base de datos
+   Salida: Retorna un valor entero con la cantidad de voluntarios
+    */
     @Override
     public int countVoluntarios() {
         int total = 0;
@@ -99,6 +133,11 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         return total;
     }
 
+    /*
+   Entrada: Recibe un string con el nombre de la habilidad
+   Proceso: Se encarga de buscar a los voluntarios que tienen una habilidad especifica
+   Salida: Retorna una lista con los objetos tipo voluntarios
+    */
     @Override
     public List<Voluntario> getVolForHab(String habilidad){
         habilidad = Character.toUpperCase(habilidad.charAt(0)) +  habilidad.substring(1);
@@ -110,6 +149,11 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
+    /*
+   Entrada: No recibe nada
+   Proceso: Se encarga de buscar a los voluntarios asociados a todas las emergencia (todos los que estan ya inscritos a una emergencia)
+   Salida: Retorna una lista con los objetos tipo voluntario
+    */
     @Override
     public List<Voluntario> getVolForEme(){
         try(Connection conn = sql2o.open()){
@@ -120,6 +164,11 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
+    /*
+  Entrada: Recibe un string con el nombre de una tarea
+  Proceso: Se encarga de buscar a los voluntarios asociados a la tarea
+  Salida: Retorna una lista con los objetos tipo voluntario
+   */
     @Override
     public List<Voluntario> getVolForTar(String tarea){
         try(Connection conn = sql2o.open()){
@@ -130,6 +179,11 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
         }
     }
 
+    /*
+  Entrada: Recibe dos datos tipo long que representan los rangos del puntaje a buscar
+  Proceso: Busca a los voluntarios que tengan un puntaje dentro del intervalo
+  Salida: Retorna una lista de objetos tipo voluntarios
+   */
     @Override
     public List<Voluntario> getVolForIntervRank(long inferior,long superior){
         try(Connection conn = sql2o.open()){
@@ -141,6 +195,12 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     }
 
     //OTROS ----------------------------------------------------------------------------------------------------------------------
+
+    /*
+  Entrada: Recibe un string con una consulta sql
+  Proceso: Se encarga de contar la cantidad elementos de una consulta
+  Salida: Retorna un entero con el numero elementos de la respuesta de la base de datos
+   */
     @Override
     public int contTuplas (String querySQL){
         int total = 0;

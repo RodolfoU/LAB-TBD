@@ -9,6 +9,15 @@ public class Emergencia {
     private Date finicio;
     private Date ffin;
     private Integer id_institucion;
+    private float promedio;
+
+    public void setPromedio(float promedio) {
+        this.promedio = promedio;
+    }
+
+    public float getPromedio() {
+        return promedio;
+    }
 
     public Integer getId() {
         return id;

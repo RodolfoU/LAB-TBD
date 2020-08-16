@@ -16,11 +16,17 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
     //------------------------------- REST SERVICES -----------------------------------------------------------------------------
 
     // POST (create) --------------------------------------------
+
+    /*
+  Entrada: Recibe un objetivo tipo emergencia
+  Proceso: Se encarga de realizar un create (crea un voluntario en la base de datos)
+  Salida: Retorna un objeto tipo emergencia
+   */
     @Override
     public Emergencia createEmer(Emergencia emer){
         int contEmer;
         String insert_sql = "insert into emergencia (id,nombre,descrip,finicio,ffin,id_institucion) values " +
-                "(:emerId,:emerName,:emerDescrip,:emerFinicio,:emerFfin,:emerId_institucion)";
+                "(:emerId,:emerName,:emerDescrip,:emerFinicio,:emerFfin,:emerId_institucion, :promedio)";
         contEmer = contTuplas("select MAX(id) from emergencia");
         try(Connection conn = sql2o.open()){
             conn.createQuery(insert_sql)
@@ -30,6 +36,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
                     .addParameter("emerFinicio",emer.getFinicio())
                     .addParameter("emerFfin",emer.getFfin())
                     .addParameter("emerId_institucion",emer.getIdInstitucion())
+                    .addParameter("promedio",emer.getPromedio())
                     .executeUpdate();
             emer.setId(contEmer+1);
             return emer;
@@ -40,6 +47,12 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
     }
 
     // DELETE ----------------------------------------------
+
+    /*
+  Entrada: Recibe un dato tipo long que representa una id
+  Proceso: Se encarga de hacer un delete (borra una emergencia de la base de datos)
+  Salida: Retorna un string con el mensaje de respuesto de la id de emergencia
+   */
     @Override
     public String deleteEmer(long id){
         try(Connection conn = sql2o.open()){
@@ -53,6 +66,12 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
     }
 
     // PUT(update) ----------------------------------------------
+
+    /*
+  Entrada: Recibe un objeto tipo emergencia
+  Proceso: Se encarga de hacer un update (modifica una emergencia en la base de datos)
+  Salida: Retorna el objeto modificado
+   */
     @Override
     public Emergencia putEmer(Emergencia emer){
         String updateSql = "update emergencia set nombre = :emerName, descrip = :emerDescrip, " +
@@ -65,6 +84,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
                     .addParameter("emerFfin",emer.getFfin())
                     .addParameter("emerId",emer.getId())
                     .addParameter("idinst",emer.getIdInstitucion())
+                    .addParameter("promedio",emer.getPromedio())
                     .executeUpdate();
             return emer;
         } catch (Exception e) {
@@ -74,6 +94,12 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
     }
 
     // GETS (SELECT) ----------------------------------------------
+
+    /*
+ Entrada: No recibe nada
+ Proceso: Se encarga de mostrar todas las emergencias de la base de datos
+ Salida: Retorna una lista con los objetos
+  */
     @Override
     public List<Emergencia> getAllEmer() {
         try(Connection conn = sql2o.open()){
@@ -84,6 +110,11 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
         }
     }
 
+    /*
+ Entrada: Recibe un dato tipo long que representa una id
+ Proceso: Se encarga de buscar una emergecia por id
+ Salida: Retorna un arreglo con el objeto emergencia
+  */
     @Override
     public List<Emergencia> getEmerForId(long id) {
         try(Connection conn = sql2o.open()){
@@ -94,6 +125,11 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
         }
     }
 
+    /*
+ Entrada: Recibe un string con el nombre de la institucion
+ Proceso: Se encarga de mostrar todas las emergencias asociadas a una institucion
+ Salida: Retorna una lista de objetos
+  */
     @Override
     public List<Emergencia> getEmerForInst(String institucion) {
         try(Connection conn = sql2o.open()){
@@ -105,6 +141,12 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
     }
 
     //OTROS ----------------------------------------------------------------------------------------------------------------------
+
+    /*
+ Entrada: Recibe un string con la consulta sql
+ Proceso: Se encarga de contar los elementos de una consulta de sql
+ Salida: Retorna un entero con la cantidad de tuplas de la respuesta
+  */
     @Override
     public int contTuplas (String querySQL){
         int total = 0;

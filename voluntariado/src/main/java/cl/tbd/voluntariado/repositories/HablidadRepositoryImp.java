@@ -18,6 +18,12 @@ public class HablidadRepositoryImp implements HabildadRepository{
     //------------------------------- REST SERVICES -----------------------------------------------------------------------------
 
     // POST (create) --------------------------------------------------------------------------------------
+
+     /*
+  Entrada: Recibe un objeto tipo haiblidad
+  Proceso: Se encarga de hacer un create (creauna emergencia en la base de datos)
+  Salida: Retorna el objeto modificado
+   */
     @Override
     public Habilidad createHab(Habilidad hab) {
         int contHab;
@@ -37,6 +43,12 @@ public class HablidadRepositoryImp implements HabildadRepository{
     }
 
     // DELETE ---------------------------------------------------------------------------------------------
+
+    /*
+ Entrada: Recibe un dato tipo long que representa una id
+ Proceso: Se encarga de hacer un delete (borra una emergencia en la base de datos)
+ Salida: Retorna un string con el mensaje de respuesta de la habilidad borrada y su id
+  */
     @Override
     public String deleteHab(long id){
         try(Connection conn = sql2o.open()){
@@ -50,6 +62,12 @@ public class HablidadRepositoryImp implements HabildadRepository{
     }
 
     // PUTS (set) -----------------------------------------------------------------------------------------
+
+    /*
+ Entrada: Recibe un objeto tipo habilidad
+ Proceso: Se encarga de hacer un update(modifica una emergencia en la base de datos)
+ Salida: Retorna el objeto modificado
+  */
     @Override
     public Habilidad putHab(Habilidad hab){
         String updateSql = "update habilidad set descrip = :habDescrip where id = :habId";
@@ -66,6 +84,12 @@ public class HablidadRepositoryImp implements HabildadRepository{
     }
 
     // GETS (select)
+
+    /*
+ Entrada: No recibe nada
+ Proceso: Se encarga de mostrar todas las habilidades que hay en la base de datos
+ Salida: Retorna una lista con los objetos tipo habilidad
+  */
     @Override
     public List<Habilidad> getAllHab(){
         try(Connection conn = sql2o.open()){
@@ -76,6 +100,11 @@ public class HablidadRepositoryImp implements HabildadRepository{
         }
     }
 
+    /*
+Entrada: Recibe un dato tipo long que representa una id
+Proceso: Se encarga de mostrar la habilidad segun el id
+Salida: Retorna una lista con un objeto tipo habilidad
+ */
     @Override
     public List<Habilidad> getHabForId(long id) {
         try(Connection conn = sql2o.open()){
@@ -87,6 +116,12 @@ public class HablidadRepositoryImp implements HabildadRepository{
     }
 
     //OTROS ----------------------------------------------------------------------------------------------------------------------
+
+    /*
+Entrada: Recibe un string con la consulta sql
+Proceso: Se encarga de contar la cantidad de tuplas de una respuesta a una consulta en la base de datos
+Salida: Retorna un entero con la cantidad de tuplas contadas
+ */
     @Override
     public int contTuplas (String querySQL){
         int total = 0;

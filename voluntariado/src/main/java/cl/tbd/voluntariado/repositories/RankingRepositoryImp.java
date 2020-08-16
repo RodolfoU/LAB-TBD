@@ -17,6 +17,12 @@ public class RankingRepositoryImp implements RankingRepository {
     //------------------------------- REST SERVICES -----------------------------------------------------------------------------
 
     //CREATE --------------------------------------------------------------------------------------------------------------------
+
+    /*
+    Entrada: Recibe un objeto tipo ranking
+    Proceso: Se encarga de hacer un create (crea un ranking en la base de datos)
+    Salida: Retorna el objeto creado
+     */
     @Override
     public Ranking createRank(Ranking rank){
         int aux, contRank;
@@ -50,6 +56,12 @@ public class RankingRepositoryImp implements RankingRepository {
     }
 
     //DELETE --------------------------------------------------------------------------------------------------------------------
+
+    /*
+   Entrada: Recibe un dato tipo long que representa un id
+   Proceso: Se encarga de hacer un delete (borra un ranking en la base de datos)
+   Salida: Retorna un string que es el mensaje de respuesta a la peticion
+    */
     @Override
     public String deleteRank(long id){
         long idTar;
@@ -65,6 +77,12 @@ public class RankingRepositoryImp implements RankingRepository {
     }
 
     //PUTS (set) ----------------------------------------------------------------------------------------------------------------
+
+    /*
+   Entrada: Recibe una objeto tipo ranking
+   Proceso: Se encarga de hacer un update (modifica un ranking en la base de datos)
+   Salida: Retorna el objeto creado
+    */
     @Override
     public Ranking putRank(Ranking rank){
         String updateSql = "update ranking set id_voluntario = :rankId_voluntario, id_tarea = :rankId_tarea, puntaje = :rankPuntaje, flg_invitado = :rankFlg_invitado, flg_participa = :rankFlg_participa where id = :rankId";
@@ -85,6 +103,12 @@ public class RankingRepositoryImp implements RankingRepository {
     }
 
     //GETS (select) -------------------------------------------------------------------------------------------------------------
+
+     /*
+    Entrada: No recibe nada
+    Proceso: Se encarga de entregar todos los rankings de la base de datos
+    Salida: Retorna una lista de objetos
+     */
     @Override
     public List<Ranking> getAllRank(){
         try(Connection conn = sql2o.open()){
@@ -95,6 +119,11 @@ public class RankingRepositoryImp implements RankingRepository {
         }
     }
 
+    /*
+   Entrada: Recibe un dato tipo long que representa un id
+   Proceso: Se encarga de buscar una tupla de ranking por id
+   Salida: Retorna una lista con un objeto
+    */
     @Override
     public List<Ranking> getRankForId(long id) {
         try(Connection conn = sql2o.open()){
@@ -106,6 +135,12 @@ public class RankingRepositoryImp implements RankingRepository {
     }
 
     //OTROS ----------------------------------------------------------------------------------------------------------------------
+
+    /*
+   Entrada: Recibe un string con la consulta SQL
+   Proceso: Se encarga de contar la cantidad de elementos de una consulta
+   Salida: Retorna un entero con el numero de elementos
+    */
     @Override
     public int contTuplas (String querySQL){
         int total = 0;
@@ -118,6 +153,11 @@ public class RankingRepositoryImp implements RankingRepository {
         return total;
     }
 
+    /*
+   Entrada: Recibe un dato tipo long que representa un id del voluntario,  y otro id de la tarea
+   Proceso: Se encarga de ver que habilidades hay en comun, entre la tarea y el voluntario
+   Salida: Retorna un entero con la cantidad de habilidades en comun
+    */
     @Override
     public int validateVolinTar(long idVol,long idTar) {
         String querySql = "select count (n.id) as cantidad from " +

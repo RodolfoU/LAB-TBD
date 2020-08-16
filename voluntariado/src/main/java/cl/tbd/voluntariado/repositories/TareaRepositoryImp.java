@@ -17,6 +17,12 @@ public class TareaRepositoryImp implements TareaRepository{
     //------------------------------- REST SERVICES -----------------------------------------------------------------------------
 
     //CREATE --------------------------------------------------------------------------------------------------------------------
+
+    /*
+ Entrada: Recibe un objeto tipo tarea
+ Proceso: Se encarga de hacer un create (crea una tarea en la base de datos)
+ Salida: Retorna el objeto creado
+  */
     @Override
     public Tarea createTar(Tarea tar){
         int contTar;
@@ -44,6 +50,12 @@ public class TareaRepositoryImp implements TareaRepository{
     }
 
     //DELETE --------------------------------------------------------------------------------------------------------------------
+
+    /*
+ Entrada: Recibe un dato tipo long que representa un id
+ Proceso: Se encarga de hacer un delete (borra una emergencia en la base de datos)
+ Salida: Retorna el objeto borrado
+  */
     @Override
     public String deleteTar(long id){
         String querySql = "delete from tarea where id =" + id;
@@ -57,6 +69,12 @@ public class TareaRepositoryImp implements TareaRepository{
     }
 
     //PUTS ----------------------------------------------------------------------------------------------------------------------
+
+    /*
+ Entrada: Recibe un objeto tipo tarea
+ Proceso: Se encarga de hacer un update (modifica una tarea en la base de datos)
+ Salida: Retorna el objeto modificado
+  */
     @Override
     public Tarea updateTar(Tarea tar){
         String querySql = "update tarea set nombre = :tarNombre,descrip = :tarDescrip,cant_vol_requeridos = :tarCantRequer," +
@@ -81,6 +99,12 @@ public class TareaRepositoryImp implements TareaRepository{
     }
 
     //GETS ----------------------------------------------------------------------------------------------------------------------
+
+     /*
+  Entrada: No recibe nada
+  Proceso: Se encarga de mostrar todas las tareas de la base de datos
+  Salida: Retorna una lista con todos los objetos tipo tara de la base de datos
+   */
     @Override
     public List<Tarea> getAllTar() {
         try(Connection conn = sql2o.open()){
@@ -91,6 +115,11 @@ public class TareaRepositoryImp implements TareaRepository{
         }
     }
 
+    /*
+ Entrada: Recibe un dato tipo long que representa una id
+ Proceso: Se encarga de seleccionar una tarea por id
+ Salida: Retorna el objeto seleccionado
+  */
     @Override
     public List<Tarea> getTar(long id){
         try(Connection conn = sql2o.open()){
@@ -101,6 +130,11 @@ public class TareaRepositoryImp implements TareaRepository{
         }
     }
 
+    /*
+ Entrada: Recibe un string con el nombre de la emergencia
+ Proceso: Se encarga de mostrar todas las tareas asociadas a una emergencia en particular
+ Salida: Retorna una lista con objetos tipo tarea
+  */
     @Override
     public List<Tarea> getTarForEmer(String emergencia) {
         try(Connection conn = sql2o.open()){
@@ -111,6 +145,11 @@ public class TareaRepositoryImp implements TareaRepository{
         }
     }
 
+    /*
+ Entrada: No recibe nada
+ Proceso: Se encarga de contar la cantidad de tareas que hay registradas en la base de datos
+ Salida: Retorna un entero con el numero de tareas
+  */
     @Override
     public int getNumeroTareas() {
         int cont;
@@ -124,6 +163,12 @@ public class TareaRepositoryImp implements TareaRepository{
     }
 
     //OTROS ----------------------------------------------------------------------------------------------------------------------
+
+    /*
+ Entrada: Recibe un string con la consulta sql
+ Proceso: Se encarga de contar la cantidad de elementos de una respuesta de la base de datos
+ Salida: Retorna un entero con la cantidad de tuplas de la respuesta
+  */
     @Override
     public int contTuplas (String querySQL){
         int total = 0;
