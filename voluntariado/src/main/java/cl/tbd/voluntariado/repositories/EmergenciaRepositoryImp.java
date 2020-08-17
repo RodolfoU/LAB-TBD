@@ -25,7 +25,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
     @Override
     public Emergencia createEmer(Emergencia emer){
         int contEmer;
-        String insert_sql = "insert into emergencia (id,nombre,descrip,finicio,ffin,id_institucion) values " +
+        String insert_sql = "insert into emergencia (id,nombre,descrip,finicio,ffin,id_institucion,promedio) values " +
                 "(:emerId,:emerName,:emerDescrip,:emerFinicio,:emerFfin,:emerId_institucion, :promedio)";
         contEmer = contTuplas("select MAX(id) from emergencia");
         try(Connection conn = sql2o.open()){
@@ -75,7 +75,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
     @Override
     public Emergencia putEmer(Emergencia emer){
         String updateSql = "update emergencia set nombre = :emerName, descrip = :emerDescrip, " +
-                "finicio = :emerFinicio, ffin = :emerFfin, id_institucion = :idinst where id = :emerId";
+                "finicio = :emerFinicio, ffin = :emerFfin, id_institucion = :idinst , promedio=:prom where id = :emerId";
         try (Connection con = sql2o.open()) {
             con.createQuery(updateSql)
                     .addParameter("emerName",emer.getNombre())
@@ -84,7 +84,7 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
                     .addParameter("emerFfin",emer.getFfin())
                     .addParameter("emerId",emer.getId())
                     .addParameter("idinst",emer.getIdInstitucion())
-                    .addParameter("promedio",emer.getPromedio())
+                    .addParameter("prom",emer.getPromedio())
                     .executeUpdate();
             return emer;
         } catch (Exception e) {

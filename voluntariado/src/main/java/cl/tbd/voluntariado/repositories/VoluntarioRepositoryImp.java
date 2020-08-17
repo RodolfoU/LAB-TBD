@@ -21,7 +21,7 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository{
     /*
    Entrada: Recibe un objeto tipo Voluntario
    Proceso: Se encarga de hacer un create (crea un voluntario en la base de datos)
-   Salida: Retorna el bojeto creado
+   Salida: Retorna el objeto creado
     */
     @Override
     public Voluntario createVoluntario(Voluntario vol){
