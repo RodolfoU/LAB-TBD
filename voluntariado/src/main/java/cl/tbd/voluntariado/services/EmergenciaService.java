@@ -1,6 +1,7 @@
 package cl.tbd.voluntariado.services;
 
 import cl.tbd.voluntariado.models.Emergencia;
+import cl.tbd.voluntariado.models.Geometry;
 import cl.tbd.voluntariado.repositories.EmergenciaRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,13 @@ public class EmergenciaService {
     @ResponseBody
     public List<Emergencia> getEmerForInst(@PathVariable String institucion){
         return emerRepository.getEmerForInst(institucion);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/emergencias/puntos")
+    @ResponseBody
+    public List<Geometry> getEmerPuntos(){
+        return emerRepository.getEmerPuntos();
     }
 
 }

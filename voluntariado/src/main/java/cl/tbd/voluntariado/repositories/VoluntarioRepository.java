@@ -1,7 +1,10 @@
 package cl.tbd.voluntariado.repositories;
 
+import cl.tbd.voluntariado.models.Emergencia;
+import cl.tbd.voluntariado.models.Geometry;
 import cl.tbd.voluntariado.models.Voluntario;
 
+import java.awt.*;
 import java.util.List;
 
 public interface VoluntarioRepository {
@@ -19,5 +22,9 @@ public interface VoluntarioRepository {
     public List<Voluntario> getVolForIntervRank(long inferior,long superior);
 
     public int contTuplas (String querySQL);
+
+    public List<Geometry> getVolPuntos();
+
+    public List<Geometry> getVolCercanoEmer(Integer idEmer, long radio);
 
 }

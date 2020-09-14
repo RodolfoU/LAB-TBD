@@ -1,5 +1,6 @@
 package cl.tbd.voluntariado.models;
 
+import java.awt.*;
 import java.util.Date;
 
 public class Emergencia {
@@ -10,6 +11,16 @@ public class Emergencia {
     private Date ffin;
     private Integer id_institucion;
     private float promedio;
+    private Geometry posicion;
+
+    public void setPosicion(Geometry posicion) {
+        this.posicion = posicion;
+    }
+
+    public Geometry getPosicion() {
+        return posicion;
+    }
+
 
     public void setPromedio(float promedio) {
         this.promedio = promedio;

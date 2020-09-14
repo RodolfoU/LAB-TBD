@@ -1,6 +1,7 @@
 package cl.tbd.voluntariado.repositories;
 
 import cl.tbd.voluntariado.models.Emergencia;
+import cl.tbd.voluntariado.models.Geometry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.sql2o.Connection;
@@ -157,6 +158,16 @@ public class EmergenciaRepositoryImp implements EmergenciaRepository{
             return -1;
         }
         return total;
+    }
+
+    @Override
+    public List<Geometry> getEmerPuntos() {
+        try (Connection conn = sql2o.open()) {
+            return conn.createQuery("select id , nombre, ST_X(location) as longitud, ST_Y(location) as latitud from emergencia").executeAndFetch(Geometry.class);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
 }
