@@ -217,6 +217,11 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository {
         return total;
     }
 
+    /*
+  Entrada: Nada
+  Proceso: Se encarga de guardar los puntos de los voluntarios en el mapa
+  Salida: Retorna una lista tipo Geometry
+   */
     @Override
     public List<Geometry> getVolPuntos() {
         try (Connection conn = sql2o.open()) {
@@ -227,6 +232,11 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository {
         }
     }
 
+    /*
+  Entrada: Recibe un entero con el id de la emergencia
+  Proceso: Se encarga de consultar por las coordenadas de todas las emergencias en el mapa
+  Salida: Retorna una lista tipo Geometry
+   */
     public List<Geometry> coordenadasEmergencia(Integer idEmer){
         try (Connection conn = sql2o.open()) {
             return conn.createQuery("select id , nombre, ST_X(location) as longitud, ST_Y(location) as latitud from emergencia where id ="+idEmer).executeAndFetch(Geometry.class);
@@ -236,6 +246,11 @@ public class VoluntarioRepositoryImp implements VoluntarioRepository {
         }
     }
 
+    /*
+  Entrada: Recibe el id de la emergencia y el radio al que se quiere buscar al voluntario
+  Proceso: Se encarga devolver todos los voluntarios y sus ubicaciones que esten cercanos al punto
+  Salida: Retorna una lista tipo Geometry
+   */
     @Override
     public List<Geometry> getVolCercanoEmer(Integer idEmer,long radio) {
         try (Connection conn = sql2o.open()) {
