@@ -1,0 +1,10 @@
+{
+  "myId": 2,
+  "primaryId": 0,
+  "dbConnConfig":{"user":"postgres", "pass":"123456789", "host":"127.0.0.1", "port":"5432", "dbname":"voluntariadodb2"},
+  "servers": [
+    {"host": "localhost", "port": 5050 },
+    {"host": "localhost", "port": 5051 },
+    {"host": "localhost", "port": 5052 }
+  ]
+}

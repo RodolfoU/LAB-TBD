@@ -1,1 +1,0 @@
-update ranking set puntaje = (hab_en_comun(id_voluntario,id_tarea)*1.0/cant_habilidades())*100.0 ;

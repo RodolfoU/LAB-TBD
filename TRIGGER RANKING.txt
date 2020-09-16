@@ -1,3 +1,0 @@
-CREATE TRIGGER trg_recalcular_ranking   
-AFTER INSERT   ON habilidad  
-EXECUTE PROCEDURE recalcular_rankig();
